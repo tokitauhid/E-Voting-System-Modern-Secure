@@ -4,46 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="E-Voting System — Register as a voter to participate in secure digital elections.">
     <title>E-Voting | Voter Registration</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
 
-    <div class="auth-container">
-        <div class="auth-box">
-            <div class="auth-header">
-                <h2>Voter Registration</h2>
-                <p>Create your account to cast your vote</p>
-            </div>
-
-            <form id="registerForm">
-                <div class="input-group">
-                    <label>Full Name</label>
-                    <input type="text" id="fullName" placeholder="Enter full name" required>
-                    <i class="fas fa-user icon"></i>
+    <div class="auth-page-bg">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <div style="font-size: 2.2rem; margin-bottom: 12px; color: var(--success-color);">
+                        <i class="fas fa-user-plus" aria-hidden="true"></i>
+                    </div>
+                    <h2>Voter Registration</h2>
+                    <p>Create your account to cast your vote</p>
                 </div>
 
-                <div class="input-group">
-                    <label>Voter ID</label>
-                    <input type="text" id="voterId" placeholder="Unique Voter ID (min 5 chars)" required>
-                    <i class="fas fa-id-card icon"></i>
+                <form id="registerForm">
+                    <div class="input-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" placeholder="Enter full name" required autocomplete="name">
+                        <i class="fas fa-user icon" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="voterId">Voter ID</label>
+                        <input type="text" id="voterId" placeholder="Unique Voter ID (min 5 chars)" required
+                            autocomplete="username">
+                        <i class="fas fa-id-card icon" aria-hidden="true"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Create a password (min 6 chars)" required
+                            autocomplete="new-password">
+                        <i class="fas fa-eye icon toggle-password" id="togglePassword" id="toggleIcon"
+                            aria-label="Toggle password visibility"></i>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-user-check" aria-hidden="true" style="margin-right: 6px;"></i> Register
+                    </button>
+                </form>
+
+                <div class="auth-link">
+                    Already have an account? <a href="login.html">Sign In</a>
                 </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="Create a password (min 6 chars)" required>
-                    <i class="fas fa-lock icon" style="right: 35px;"></i>
-                    <i class="fas fa-eye icon toggle-password" id="togglePassword" id="toggleIcon"
-                        style="right: 10px;"></i>
-                </div>
-
-                <button type="submit" class="btn-primary">Register</button>
-            </form>
-
-            <div class="auth-link">
-                Already have an account? <a href="login.html">Sign In</a>
             </div>
         </div>
     </div>

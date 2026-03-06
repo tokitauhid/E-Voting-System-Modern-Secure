@@ -8,7 +8,7 @@
         content="E-Voting Admin Dashboard — Manage candidates, view live results, and administer elections securely.">
     <title>E-Voting | Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <style>
         /* ── Layout ── */
@@ -16,18 +16,18 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
         }
 
         /* ── Sidebar ── */
         .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #0f2027 0%, #1e3c72 50%, #2a5298 100%);
+            width: 270px;
+            background: linear-gradient(180deg, #0c1929 0%, #152847 50%, #1e3a6e 100%);
             color: white;
             display: flex;
             flex-direction: column;
             padding: 0;
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
             z-index: 200;
             flex-shrink: 0;
@@ -35,25 +35,30 @@
 
         .sidebar-header {
             text-align: center;
-            padding: 28px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 28px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(0, 0, 0, 0.15);
         }
 
         .sidebar-header h3 {
             margin: 0;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: .5px;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .sidebar-header h3 i {
-            margin-right: 8px;
             color: var(--accent-color);
+            font-size: 1.3rem;
         }
 
         .nav-links {
             list-style: none;
-            padding: 12px 0;
+            padding: 16px 0;
             margin: 0;
             flex-grow: 1;
         }
@@ -67,20 +72,24 @@
             align-items: center;
             gap: 12px;
             padding: 14px 28px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.55);
             text-decoration: none;
             transition: all 0.25s ease;
             border-left: 3px solid transparent;
             cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-size: 0.92rem;
+            font-weight: 600;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: rgba(255, 255, 255, 0.07);
             color: white;
             border-left-color: var(--accent-color);
+        }
+
+        .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .nav-links a:focus-visible {
@@ -91,28 +100,29 @@
         .nav-links i {
             width: 22px;
             text-align: center;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
         .logout-btn {
-            background: rgba(220, 53, 69, 0.85);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(185, 28, 28, 0.9));
             color: white;
             border: none;
-            padding: 14px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background 0.3s;
-            font-size: 0.95rem;
+            transition: all var(--transition);
+            font-size: 0.92rem;
+            font-family: var(--font);
         }
 
         .logout-btn:hover {
-            background: #bd2130;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
         }
 
         .logout-btn:focus-visible {
@@ -132,15 +142,17 @@
             border: none;
             width: 44px;
             height: 44px;
-            border-radius: 10px;
+            border-radius: var(--radius-sm);
             font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: background 0.3s;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition);
+            font-family: var(--font);
         }
 
         .sidebar-toggle:hover {
             background: var(--secondary-color);
+            transform: scale(1.05);
         }
 
         .sidebar-overlay {
@@ -152,7 +164,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             z-index: 150;
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(3px);
         }
 
         /* ── Main Content ── */
@@ -160,7 +172,7 @@
             flex-grow: 1;
             padding: 32px;
             overflow-y: auto;
-            background-color: #f0f2f5;
+            background-color: var(--bg-color);
         }
 
         .header {
@@ -175,8 +187,9 @@
         .header h1 {
             color: var(--primary-color);
             margin: 0;
-            font-size: 1.75rem;
-            font-weight: 700;
+            font-size: 1.65rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         /* ── Stat Cards ── */
@@ -188,58 +201,120 @@
         }
 
         .stat-card {
-            background: white;
+            background: var(--card-bg);
             padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: transform var(--transition), box-shadow var(--transition);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .stat-card:nth-child(1)::before {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .stat-card:nth-child(2)::before {
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .stat-card:nth-child(3)::before {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
         }
 
         .stat-info h3 {
             margin: 0;
             font-size: 2rem;
             color: var(--primary-color);
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         .stat-info p {
-            margin: 6px 0 0;
-            color: #7f8c8d;
-            font-size: 0.9rem;
+            margin: 4px 0 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
         .stat-icon {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            opacity: 0.15;
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .stat-icon.voters {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #2563eb;
+        }
+
+        .stat-icon.votes {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #059669;
+        }
+
+        .stat-icon.turnout {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #d97706;
         }
 
         /* ── Sections ── */
         .section {
             display: none;
-            animation: fadeIn 0.3s ease-out;
+            animation: sectionFadeIn 0.35s ease-out;
         }
 
         .section.active {
             display: block;
         }
 
+        @keyframes sectionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .panel {
-            background: white;
+            background: var(--card-bg);
             padding: 28px;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
             margin-bottom: 28px;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border-color);
         }
 
         .panel-header {
@@ -247,14 +322,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 22px;
-            border-bottom: 1px solid #eef0f2;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 16px;
         }
 
         .panel-header h2 {
             margin: 0;
             color: var(--primary-color);
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
         }
 
@@ -268,36 +343,49 @@
         td {
             text-align: left;
             padding: 14px 16px;
-            border-bottom: 1px solid #eef0f2;
+            border-bottom: 1px solid var(--border-color);
         }
 
         th {
-            background-color: #f8f9fb;
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 0.85rem;
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.78rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
+        }
+
+        tr {
+            transition: background var(--transition);
         }
 
         tr:hover td {
-            background-color: #fafbfc;
+            background-color: #f8fafc;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         .btn-sm {
-            padding: 7px 12px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
             border: none;
             cursor: pointer;
             color: white;
             margin-right: 6px;
-            transition: filter 0.2s, transform 0.15s;
-            font-size: 0.85rem;
+            transition: all var(--transition);
+            font-size: 0.82rem;
+            font-family: var(--font);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .btn-sm:hover {
-            filter: brightness(0.9);
-            transform: scale(1.05);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
         }
 
         .btn-sm:focus-visible {
@@ -306,68 +394,88 @@
         }
 
         .btn-edit {
-            background-color: var(--secondary-color);
+            background: linear-gradient(135deg, var(--secondary-color), #4b7bd5);
         }
 
         .btn-delete {
-            background-color: var(--danger-color);
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
         }
 
         .badge-info {
-            background-color: #e8f4fd;
-            color: #0c5460;
-            padding: 5px 12px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #1e40af;
+            padding: 5px 14px;
             border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         /* ── Results Bars ── */
         .result-bar-container {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .result-labels {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-            color: #555;
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .result-labels strong {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
         .progress-bg {
-            background: #e9ecef;
-            height: 22px;
-            border-radius: 11px;
+            background: #e2e8f0;
+            height: 24px;
+            border-radius: 12px;
             overflow: hidden;
+            position: relative;
         }
 
         .progress-fill {
             height: 100%;
-            border-radius: 11px;
-            transition: width 1s ease-in-out;
+            border-radius: 12px;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15));
+            border-radius: 12px;
         }
 
         /* ── Export Button ── */
         .btn-export {
             width: auto;
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.88rem;
+            font-family: var(--font);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all var(--transition);
         }
 
         .btn-export:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
         }
 
         /* ── Refresh Button ── */
@@ -376,17 +484,20 @@
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
+            font-family: var(--font);
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: filter 0.2s;
+            transition: all var(--transition);
         }
 
         .btn-refresh:hover {
-            filter: brightness(1.15);
+            background: var(--primary-light);
+            transform: translateY(-1px);
         }
 
         /* ── Custom Modal ── */
@@ -401,7 +512,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(4px);
         }
 
         .modal-backdrop.show {
@@ -409,14 +520,14 @@
         }
 
         .modal-box {
-            background-color: white;
-            padding: 32px;
-            border-radius: 16px;
+            background-color: var(--card-bg);
+            padding: 36px;
+            border-radius: var(--radius-xl);
             text-align: center;
             max-width: 440px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-            animation: modalSlideIn 0.3s ease-out;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes modalSlideIn {
@@ -435,12 +546,13 @@
             margin: 0 0 8px;
             color: var(--primary-color);
             font-size: 1.2rem;
+            font-weight: 800;
         }
 
         .modal-box p {
-            color: #666;
+            color: var(--text-muted);
             margin: 0 0 20px;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
         }
 
         .modal-box .input-group {
@@ -456,48 +568,53 @@
         }
 
         .btn-modal-cancel {
-            background: #e9ecef;
-            color: #495057;
+            background: #e2e8f0;
+            color: var(--text-color);
             border: none;
             padding: 10px 24px;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.2s;
+            font-family: var(--font);
+            transition: all var(--transition);
         }
 
         .btn-modal-cancel:hover {
-            background: #dee2e6;
+            background: #cbd5e1;
         }
 
         .btn-modal-confirm {
-            background: var(--success-color);
+            background: linear-gradient(135deg, var(--success-color), #059669);
             color: white;
             border: none;
             padding: 10px 24px;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            font-weight: 600;
-            transition: filter 0.2s;
+            font-weight: 700;
+            font-family: var(--font);
+            transition: all var(--transition);
         }
 
         .btn-modal-confirm:hover {
-            filter: brightness(0.9);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
         }
 
         .btn-modal-danger {
-            background: var(--danger-color);
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
             color: white;
             border: none;
             padding: 10px 24px;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            font-weight: 600;
-            transition: filter 0.2s;
+            font-weight: 700;
+            font-family: var(--font);
+            transition: all var(--transition);
         }
 
         .btn-modal-danger:hover {
-            filter: brightness(0.9);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
         }
 
         /* ── Candidates Layout ── */
@@ -541,7 +658,7 @@
             }
 
             .header h1 {
-                font-size: 1.35rem;
+                font-size: 1.3rem;
             }
 
             .stats-grid {
@@ -593,21 +710,27 @@
                         <h3 id="totalVoters">0</h3>
                         <p>Registered Voters</p>
                     </div>
-                    <i class="fas fa-user-friends stat-icon" aria-hidden="true"></i>
+                    <div class="stat-icon voters">
+                        <i class="fas fa-user-friends" aria-hidden="true"></i>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3 id="totalVotes">0</h3>
                         <p>Total Votes Cast</p>
                     </div>
-                    <i class="fas fa-vote-yea stat-icon" aria-hidden="true"></i>
+                    <div class="stat-icon votes">
+                        <i class="fas fa-vote-yea" aria-hidden="true"></i>
+                    </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3 id="turnout">0%</h3>
                         <p>Voter Turnout</p>
                     </div>
-                    <i class="fas fa-chart-pie stat-icon" aria-hidden="true"></i>
+                    <div class="stat-icon turnout">
+                        <i class="fas fa-chart-pie" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
 
@@ -652,7 +775,9 @@
                                 <input type="text" id="candIcon" placeholder="e.g. fa-user-tie" data-default="fa-user">
                                 <i class="fas fa-icons icon" aria-hidden="true"></i>
                             </div>
-                            <button type="submit" class="btn-primary">Add Candidate</button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-plus" aria-hidden="true" style="margin-right: 6px;"></i> Add Candidate
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -702,7 +827,9 @@
                         <input type="password" id="newAdminPass" required autocomplete="new-password">
                         <i class="fas fa-key icon" aria-hidden="true"></i>
                     </div>
-                    <button type="submit" class="btn-primary">Update Credentials</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save" aria-hidden="true" style="margin-right: 6px;"></i> Update Credentials
+                    </button>
                 </form>
             </div>
         </div>
@@ -719,14 +846,17 @@
                 <input type="text" id="editEmblemInput" placeholder="e.g. fa-user-tie">
                 <i class="fas fa-icons icon" aria-hidden="true"></i>
             </div>
-            <div style="margin-bottom: 16px; padding: 12px; background: #f8f9fb; border-radius: 8px;">
-                <span style="color: #666; font-size: 0.85rem;">Preview:</span>
+            <div
+                style="margin-bottom: 16px; padding: 14px; background: #f8fafc; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                <span style="color: var(--text-muted); font-size: 0.82rem; font-weight: 600;">Preview:</span>
                 <i id="editEmblemPreview" class="fas fa-user"
                     style="font-size: 1.5rem; margin-left: 10px; color: var(--primary-color);"></i>
             </div>
             <div class="modal-actions">
                 <button class="btn-modal-cancel" onclick="closeEmblemModal()">Cancel</button>
-                <button class="btn-modal-confirm" onclick="saveEmblemEdit()">Save</button>
+                <button class="btn-modal-confirm" onclick="saveEmblemEdit()">
+                    <i class="fas fa-check" aria-hidden="true" style="margin-right: 4px;"></i> Save
+                </button>
             </div>
         </div>
     </div>
@@ -735,14 +865,17 @@
     <div class="modal-backdrop" id="deleteConfirmModal" role="dialog" aria-labelledby="deleteConfirmTitle"
         aria-modal="true">
         <div class="modal-box">
-            <h3 id="deleteConfirmTitle" style="color: var(--danger-color);">
-                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Delete Candidate
-            </h3>
+            <div style="font-size: 2.5rem; color: var(--danger-color); margin-bottom: 8px;">
+                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+            <h3 id="deleteConfirmTitle" style="color: var(--danger-color);">Delete Candidate</h3>
             <p>Are you sure you want to delete <strong id="deleteCandName"></strong>? This will not remove existing
                 votes for this candidate.</p>
             <div class="modal-actions">
                 <button class="btn-modal-cancel" onclick="closeDeleteModal()">Cancel</button>
-                <button class="btn-modal-danger" onclick="confirmDeleteCandidate()">Delete</button>
+                <button class="btn-modal-danger" onclick="confirmDeleteCandidate()">
+                    <i class="fas fa-trash" aria-hidden="true" style="margin-right: 4px;"></i> Delete
+                </button>
             </div>
         </div>
     </div>
