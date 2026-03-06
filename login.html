@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Voting System | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h2>E-VOTING SYSTEM</h2>
+                <p>Sign in to start your session</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Voter ID</label>
+                    <input type="text" id="voterId" placeholder="Enter Voter ID" required>
+                    <i class="fas fa-user icon"></i>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter Password" required>
+                    <i class="fas fa-lock icon" style="right: 35px;"></i>
+                    <i class="fas fa-eye icon toggle-password" id="togglePassword" id="toggleIcon"
+                        style="right: 10px;"></i>
+                </div>
+
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px;">
+                    <div>
+                        <input type="checkbox" id="remember">
+                        <label for="remember" style="color: #666; cursor: pointer;">Remember Me</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Sign In</button>
+            </form>
+
+            <div class="auth-link" style="display: flex; flex-direction: column; gap: 5px;">
+                <a href="forgot_password.html">I forgot my password</a>
+                <a href="register.html">Don't have an account? Register</a>
+                <a href="admin_login.html" style="color: #666; font-size: 12px; margin-top: 10px;">Admin Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Voting Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        /* Specific Dashboard Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .sidebar-profile {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+
+        .main-section {
+            flex: 3;
+            min-width: 600px;
+        }
+
+        .profile-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-color);
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .badge-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .candidate-img-placeholder {
+            height: 180px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 4rem;
+        }
+
+        .candidate-info {
+            padding: 1.5rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .candidate-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .candidate-party {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-vote {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            width: 100%;
+        }
+
+        .btn-vote:hover {
+            background: var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        .status-message {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+            font-size: 1.1rem;
+        }
+
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .modal-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-confirm {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: #ccc;
+            color: #333;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-vote-yea"></i> E-VOTING SYSTEM
+        </div>
+        <div class="user-info">
+            <span id="userDisplay">Loading...</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- Profile Section -->
+        <aside class="sidebar-profile">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3 id="profileName">User Name</h3>
+                <p id="profileId" style="color: #666; margin: 5px 0;">ID: ---</p>
+                <div style="margin-top: 10px;">
+                    <span id="profileStatus" class="badge badge-warning">Loading...</span>
+                </div>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 10px; color: var(--primary-color);">Account Info</h4>
+                <p style="font-size: 0.9rem; color: #666; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-shield-alt"></i> Secure Voter
+                </p>
+                <!-- Can add more stats like Joined Date -->
+            </div>
+        </aside>
+
+        <!-- Main Voting Area -->
+        <div class="main-section">
+            <div class="header-section">
+                <h2 style="color: var(--primary-color); margin-top: 0;">Cast Your Vote</h2>
+                <p style="color: #666; margin-bottom: 20px;">Select your preferred candidate below. Once cast, your vote
+                    is final.</p>
+                <div id="voteStatus" class="status-message"></div>
+            </div>
+
+            <div class="candidates-grid" id="candidatesGrid">
+                <!-- Candidates will be populated here -->
+                <div style="text-align: center; width: 100%; color: #666;">Loading candidates...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vote Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Vote</h3>
+            <p>Are you sure you want to vote for <b id="modalCandidateName" style="color: var(--secondary-color);"></b>?
+            </p>
+            <p style="font-size: 0.9rem; color: #888;">This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-confirm" onclick="confirmVote()">Confirm Vote</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/vote.js"></script>
+
+</body>
+
+</html>

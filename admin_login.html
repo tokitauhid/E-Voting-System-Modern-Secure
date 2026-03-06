@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Voting | Admin Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-box" style="border-top: 4px solid var(--danger-color);">
+            <div class="auth-header">
+                <h2 style="color: var(--danger-color);"><i class="fas fa-user-shield"></i> Admin Login</h2>
+                <p>Restricted Access Area</p>
+            </div>
+
+            <form id="adminLoginForm">
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" id="adminUser" placeholder="Enter Admin Username" required>
+                    <i class="fas fa-user icon"></i>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPass" placeholder="Enter Admin Password" required>
+                    <i class="fas fa-lock icon"></i>
+                </div>
+
+                <button type="submit" class="btn-primary" style="background-color: var(--danger-color);">Login as
+                    Admin</button>
+            </form>
+
+            <div class="auth-link">
+                <a href="login.html"><i class="fas fa-arrow-left"></i> Back to Voter Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('adminUser').value.trim();
+            const pass = document.getElementById('adminPass').value;
+
+            // Load credentials
+            const creds = Storage.get('adminCreds') || { username: 'admin', password: 'admin' };
+
+            if (user === creds.username && pass === creds.password) {
+                Storage.set('adminSession', true);
+                Toast.show('Login Successful!', 'success');
+                setTimeout(() => window.location.href = 'admin_dashboard.html', 1000);
+            } else {
+                Toast.show('Invalid Admin Credentials!', 'error');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
